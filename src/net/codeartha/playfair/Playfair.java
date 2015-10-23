@@ -34,7 +34,7 @@ public class Playfair {
 	public void encryptMsg()
 	{
 		int i = 0;
-		while(i < this.msgIn.length()-2)
+		while(i < this.msgIn.length()-1)
 		{
 			String char1 = msgIn.substring(i, i + 1);
 			String char2 = msgIn.substring(i + 1, i + 2);
