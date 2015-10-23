@@ -11,10 +11,10 @@ public class start {
 		pf.generateKeyGrid();
 		pf.printKeyGrid();
 		
-		System.out.println(pf.getLetterCoords("n")); //prints [x=0,y=2]  which is wrong, have to swap
-		//pf.setMsgIn("unpetittexteachiffrer");
-		//pf.encryptMsg();
-		//System.out.println(pf.getMsgOut());
+		//System.out.println(pf.getLetterCoords("n")); //prints [x=0,y=2]  which is wrong, have to swap
+		pf.setMsgIn("vnpetittexteachiffrer");
+		pf.encryptMsg();
+		System.out.println(pf.getMsgOut());
 	}
 
 }

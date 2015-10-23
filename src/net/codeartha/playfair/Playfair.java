@@ -12,7 +12,7 @@ import net.codeartha.playfair.PairPointReturn;
  */
 public class Playfair {
 
-	private String[][] keyGrid = new String [5][5];  // x axis on the row
+	private String[][] keyGrid = new String [5][5];  // String[3][5] create array of 3 rows 5 columns => keyGrid[y][x]
 	private String key = "";
 	private String msgIn = "";
 	private String msgOut = "";
@@ -71,16 +71,16 @@ public class Playfair {
 		if (letter == null || array == null)
 			return null;
 
-		for (int rowIndex = 0; rowIndex < array.length; rowIndex++)
+		for (int y = 0; y < array.length; y++)
 		{
-			Object[] row = array[rowIndex];
+			Object[] row = array[y];
 			if (row != null)
 			{
-				for (int columnIndex = 0; columnIndex < row.length; columnIndex++)
+				for (int x = 0; x < row.length; x++)
 				{
-					if (letter.equals(row[columnIndex]))
+					if (letter.equals(row[x]))
 					{
-						return new Point(rowIndex, columnIndex);    //point (x,y)
+						return new Point(x, y);    //point (x,y)
 					}
 				}
 			}
@@ -104,12 +104,12 @@ public class Playfair {
 	 */
 	public void printKeyGrid()
 	{
-		for(int i = 0 ; i <= 4 ; i++) //= lines = y
+		for(int y = 0 ; y <= 4 ; y++) //= lines = y
 		{
 			String temp = "";
-			for(int j = 0 ; j <= 4 ; j++)   //= columns = x
+			for(int x = 0 ; x <= 4 ; x++)   //= columns = x
 			{
-				temp = temp + " [" + this.keyGrid[i][j] + "]";
+				temp = temp + " [" + this.keyGrid[y][x] + "]";
 			}
 			System.out.println(temp);
 		}
@@ -123,11 +123,11 @@ public class Playfair {
 		this.key = removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
 		
 		int k = 0;
-		for(int i = 0; i <= 4 ; i++)
+		for(int y = 0; y <= 4 ; y++)
 		{
-			for(int j = 0; j <= 4 ; j++)
+			for(int x = 0; x <= 4 ; x++)
 			{
-				this.keyGrid[i][j] = Character.toString(this.key.charAt(k));
+				this.keyGrid[y][x] = Character.toString(this.key.charAt(k));
 				k++;
 			}
 		}
@@ -145,11 +145,11 @@ public class Playfair {
 		this.key = removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
 		
 		int k = 0;
-		for(int i = 0; i <= 4 ; i++)
+		for(int y = 0; y <= 4 ; y++)
 		{
-			for(int j = 0; j <= 4 ; j++)
+			for(int x = 0; x <= 4 ; x++)
 			{
-				this.keyGrid[i][j] = Character.toString(this.key.charAt(k));
+				this.keyGrid[y][x] = Character.toString(this.key.charAt(k));
 				k++;
 			}
 		}
@@ -180,7 +180,7 @@ public class Playfair {
 	/**
 	 * Takes two Points (=coords) as parameter, A being the coordinates of the
 	 * first letter, B the ones of the second one. This function returns the
-	 * coordinates of the encrypted character, the then have to be passed to the
+	 * coordinates of the encrypted characters, they then have to be passed to the
 	 * keyGrid to extract the encrypted character.
 	 * 
 	 * @param point A
@@ -193,52 +193,36 @@ public class Playfair {
 		Point cryptA = new Point(0, 0);
 		Point cryptB = new Point(0, 0);
 
-		if (A.x == B.x)
-		{
-			cryptA.x = A.x + 1;
-			cryptA.y = A.y;
-			cryptB.x = B.x + 1;
-			cryptB.y = B.y;
-			if (cryptA.x > 4)
-			{
-				cryptA.x = 0;
-			}
-			if (cryptB.x > 4)
-			{
-				cryptB.x = 0;
-			}
-			return new PairPointReturn(cryptA, cryptB);
-		}
-		else if (A.y == B.y)
-		{
-			cryptA.x = A.x;
-			cryptA.y = A.y + 1;
-			cryptB.x = B.x;
-			cryptB.y = B.y + 1;
-			if (cryptA.y > 4)
-			{
-				cryptA.y = 0;
-			}
-			if (cryptB.y > 4)
-			{
-				cryptB.y = 0;
-			}
-			return new PairPointReturn(cryptA, cryptB);
-		}
-		else if (A.x == B.x && A.y == B.y)
+		if (A.x == B.x && A.y == B.y)
 		{
 			cryptA.x = A.x;
 			cryptA.y = A.y;
 			cryptB.x = B.x;
 			cryptB.y = B.y;
+			return new PairPointReturn(cryptA, cryptB);
+		}
+		else if (A.x == B.x && A.y != B.y)
+		{
+			cryptA.x = (A.x + 1)%4;
+			cryptA.y = A.y;
+			cryptB.x = (B.x + 1)%4;
+			cryptB.y = B.y;
+			return new PairPointReturn(cryptA, cryptB);
+		}
+		else if (A.y == B.y && A.x != B.x)
+		{
+			cryptA.x = A.x;
+			cryptA.y = (A.y + 1)%4;
+			cryptB.x = B.x;
+			cryptB.y = (B.y + 1)%4;
 			return new PairPointReturn(cryptA, cryptB);
 		}
 		else
 		{
-			cryptA.x = A.x;
-			cryptA.y = B.y;
-			cryptB.x = B.x;
-			cryptB.y = A.y;
+			cryptA.x = B.x;
+			cryptA.y = A.y;
+			cryptB.x = A.x;
+			cryptB.y = B.y;
 			return new PairPointReturn(cryptA, cryptB);
 		}
 	}
