@@ -47,7 +47,7 @@ public class Playfair {
 			Point firstCrypt = cryptedLetters.getFirst();
 			Point secondCrypt = cryptedLetters.getSecond();
 			
-			this.msgOut = this.msgOut + this.keyGrid[firstCrypt.x][firstCrypt.y] + this.keyGrid[secondCrypt.x][secondCrypt.y];
+			this.msgOut = this.msgOut + this.keyGrid[firstCrypt.y][firstCrypt.x] + this.keyGrid[secondCrypt.y][secondCrypt.x];
 			i = i + 2;
 		}
 	}
