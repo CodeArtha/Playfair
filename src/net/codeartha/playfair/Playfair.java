@@ -31,6 +31,27 @@ public class Playfair {
 		return msgOut;
 	}
 	
+	public void decryptMsg()
+	{
+		int i = 0;
+		while(i < this.msgIn.length()-1)
+		{
+			String char1 = msgIn.substring(i, i + 1);
+			String char2 = msgIn.substring(i + 1, i + 2);
+			
+			Point locationChar1 = getLetterCoords(char1);
+			Point locationChar2 = getLetterCoords(char2);
+			
+			PairPointReturn clearLetters = decryptCoords(locationChar1, locationChar2);
+			
+			Point firstClear = clearLetters.getFirst();
+			Point secondClear = clearLetters.getSecond();
+			
+			this.msgOut = this.msgOut + this.keyGrid[firstClear.y][firstClear.x] + this.keyGrid[secondClear.y][secondClear.x];
+			i = i + 2;
+		}
+	}
+		
 	public void encryptMsg()
 	{
 		int i = 0;
@@ -187,42 +208,38 @@ public class Playfair {
 	 * @param point B
 	 * @return Object PairPointReturn
 	 */
-	private static PairPointReturn encryptCoords(Point A, Point B)
+	private static PairPointReturn encryptCoords(Point clearA, Point clearB)
 	{
 
 		Point cryptA = new Point(0, 0);
 		Point cryptB = new Point(0, 0);
 
-		if (A.x == B.x && A.y == B.y)
+		if (clearA.x == clearB.x && clearA.y == clearB.y)
 		{
-			cryptA.x = A.x;
-			cryptA.y = A.y;
-			cryptB.x = B.x;
-			cryptB.y = B.y;
+			return new PairPointReturn(clearA, clearB);
+		}
+		else if (clearA.x == clearB.x && clearA.y != clearB.y)
+		{
+			cryptA.x = (clearA.x + 1)%4;
+			cryptA.y = clearA.y;
+			cryptB.x = (clearB.x + 1)%4;
+			cryptB.y = clearB.y;
 			return new PairPointReturn(cryptA, cryptB);
 		}
-		else if (A.x == B.x && A.y != B.y)
+		else if (clearA.y == clearB.y && clearA.x != clearB.x)
 		{
-			cryptA.x = (A.x + 1)%4;
-			cryptA.y = A.y;
-			cryptB.x = (B.x + 1)%4;
-			cryptB.y = B.y;
-			return new PairPointReturn(cryptA, cryptB);
-		}
-		else if (A.y == B.y && A.x != B.x)
-		{
-			cryptA.x = A.x;
-			cryptA.y = (A.y + 1)%4;
-			cryptB.x = B.x;
-			cryptB.y = (B.y + 1)%4;
+			cryptA.x = clearA.x;
+			cryptA.y = (clearA.y + 1)%4;
+			cryptB.x = clearB.x;
+			cryptB.y = (clearB.y + 1)%4;
 			return new PairPointReturn(cryptA, cryptB);
 		}
 		else
 		{
-			cryptA.x = B.x;
-			cryptA.y = A.y;
-			cryptB.x = A.x;
-			cryptB.y = B.y;
+			cryptA.x = clearB.x;
+			cryptA.y = clearA.y;
+			cryptB.x = clearA.x;
+			cryptB.y = clearB.y;
 			return new PairPointReturn(cryptA, cryptB);
 		}
 	}
@@ -241,44 +258,24 @@ public class Playfair {
 		Point clearA = new Point(0, 0);
 		Point clearB = new Point(0, 0);
 
-		if (cryptedA.x == cryptedB.x)
+		if (cryptedA.x == cryptedB.x && cryptedA.y == cryptedB.y)
 		{
-			clearA.x = cryptedA.x - 1;
+			return new PairPointReturn(cryptedA, cryptedB);
+		}
+		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y)
+		{
+			clearA.x = (cryptedA.x - 1)%4;
 			clearA.y = cryptedA.y;
-			clearB.x = cryptedB.x - 1;
+			clearB.x = (cryptedB.x - 1)%4;
 			clearB.y = cryptedB.y;
-			if (clearA.x < 0)
-			{
-				clearA.x = 4;
-			}
-			if (clearB.x < 0)
-			{
-				clearB.x = 4;
-			}
 			return new PairPointReturn(clearA, clearB);
 		}
-		else if (cryptedA.y == cryptedB.y)
+		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x)
 		{
 			clearA.x = cryptedA.x;
-			clearA.y = cryptedA.y - 1;
+			clearA.y = (cryptedA.y - 1)%4;
 			clearB.x = cryptedB.x;
-			clearB.y = cryptedB.y - 1;
-			if (clearA.y < 0)
-			{
-				clearA.y = 4;
-			}
-			if (clearB.y < 0)
-			{
-				clearB.y = 4;
-			}
-			return new PairPointReturn(clearA, clearB);
-		}
-		else if (cryptedA.x == cryptedB.x && cryptedA.y == cryptedB.y)
-		{
-			clearA.x = cryptedA.x;
-			clearA.y = cryptedA.y;
-			clearB.x = cryptedB.x;
-			clearB.y = cryptedB.y;
+			clearB.y = (cryptedB.y - 1)%4;
 			return new PairPointReturn(clearA, clearB);
 		}
 		else
