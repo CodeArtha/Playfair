@@ -17,19 +17,15 @@ public class Playfair {
 	private String msgIn = "";
 	private String msgOut = "";
 
-	public Playfair()
+	public Playfair(){}
+	public Playfair(String password)
 	{
-		
+		this.setKey(password);
+		this.generateKeyGrid(password);
 	}
-	/*
-	 * TODO 
-	 * method for finding a letter's coords -DONE
-	 * method for reading the text binom by binom
-	 */
 	
-	public String getMsgOut() {
-		return msgOut;
-	}
+	public String getMsgOut() {return this.msgOut;}
+	public String getMsgIn(){return this.msgIn;}
 	
 	public void decryptMsg()
 	{
@@ -280,10 +276,10 @@ public class Playfair {
 		}
 		else
 		{
-			clearA.x = cryptedA.x;
-			clearA.y = cryptedB.y;
-			clearB.x = cryptedB.x;
-			clearB.y = cryptedA.y;
+			clearA.x = cryptedB.x;
+			clearA.y = cryptedA.y;
+			clearB.x = cryptedA.x;
+			clearB.y = cryptedB.y;
 			return new PairPointReturn(clearA, clearB);
 		}
 	}
