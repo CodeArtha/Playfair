@@ -1,6 +1,6 @@
 package net.codeartha.playfair;
 
-public class start {
+public class Examples {
 
 	/**
 	 * @param args

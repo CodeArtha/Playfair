@@ -3,6 +3,7 @@ package net.codeartha.playfair;
 import java.awt.Point;
 
 import net.codeartha.playfair.PairPointReturn;
+import net.codeartha.utils.StringHelper;
 
 /**
  * @author codeartha
@@ -137,7 +138,7 @@ public class Playfair {
 	 */
 	public void generateKeyGrid()
 	{
-		this.key = removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
+		this.key = StringHelper.removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
 		
 		int k = 0;
 		for(int y = 0; y <= 4 ; y++)
@@ -159,7 +160,7 @@ public class Playfair {
 	public void generateKeyGrid(String secret)
 	{
 		this.key = secret.toLowerCase();
-		this.key = removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
+		this.key = StringHelper.removeDuplicates((this.key + "abcdefghijklmnopqrstuvwxyz").replace('v', 'u'));
 		
 		int k = 0;
 		for(int y = 0; y <= 4 ; y++)
@@ -172,26 +173,6 @@ public class Playfair {
 		}
 		
 		
-	}
-	
-	/**
-	 * This method removes any duplicated characters in a string
-	 * 
-	 * @param String
-	 * @return String
-	 */
-	private static String removeDuplicates(String s)
-	{
-		StringBuilder noDupes = new StringBuilder();
-		for (int i = 0; i < s.length(); i++)
-		{
-			String si = Character.toString(s.charAt(i));
-			if (noDupes.indexOf(si) == -1)
-			{
-				noDupes.append(si);
-			}
-		}
-		return noDupes.toString();
 	}
 	
 	/**
