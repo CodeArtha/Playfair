@@ -201,16 +201,16 @@ public class Playfair {
 		else if (clearA.x == clearB.x && clearA.y != clearB.y)
 		{
 			cryptA.x = clearA.x;
-			cryptA.y = (clearA.y + 1)%4;
+			cryptA.y = (clearA.y + 1)%5;
 			cryptB.x = clearB.x;
-			cryptB.y = (clearB.y + 1)%4;
+			cryptB.y = (clearB.y + 1)%5;
 			return new PairPointReturn(cryptA, cryptB);
 		}
 		else if (clearA.y == clearB.y && clearA.x != clearB.x)
 		{
-			cryptA.x = (clearA.x + 1)%4;
+			cryptA.x = (clearA.x + 1)%5;
 			cryptA.y = clearA.y;
-			cryptB.x = (clearB.x + 1)%4;
+			cryptB.x = (clearB.x + 1)%5;
 			cryptB.y = clearB.y;
 			return new PairPointReturn(cryptA, cryptB);
 		}
@@ -245,16 +245,16 @@ public class Playfair {
 		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y)
 		{
 			clearA.x = cryptedA.x;
-			clearA.y = Math.abs((cryptedA.y - 1)%4);
+			clearA.y = Math.abs((cryptedA.y - 1)%5);
 			clearB.x = cryptedB.x;
-			clearB.y = Math.abs((cryptedB.y - 1)%4);
+			clearB.y = Math.abs((cryptedB.y - 1)%5);
 			return new PairPointReturn(clearA, clearB);
 		}
 		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x)
 		{
-			clearA.x = Math.abs((cryptedA.x - 1)%4);
+			clearA.x = Math.abs((cryptedA.x - 1)%5);
 			clearA.y = cryptedA.y;
-			clearB.x = Math.abs((cryptedB.x - 1)%4);
+			clearB.x = Math.abs((cryptedB.x - 1)%5);
 			clearB.y = cryptedB.y;
 			return new PairPointReturn(clearA, clearB);
 		}
