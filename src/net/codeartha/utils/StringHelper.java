@@ -1,5 +1,7 @@
 package net.codeartha.utils;
 
+import java.text.Normalizer;
+
 public class StringHelper{
 
 	/**
@@ -48,9 +50,11 @@ public class StringHelper{
 	 * @param String
 	 * @return String
 	 */
-	public static void replaceAccents(String s)
+	public static String stripAccents(String s) 
 	{
-		s.replaceAll(regex,"e");
+	    s = Normalizer.normalize(s, Normalizer.Form.NFD);
+	    s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+	    return s;
 	}
 }
 

@@ -27,6 +27,17 @@ public class Playfair {
 	
 	public String getMsgOut() {return this.msgOut;}
 	public String getMsgIn(){return this.msgIn;}
+	public void clearMsgIn(){this.msgIn = "";}
+	public void clearMsgOut(){this.msgOut = "";}
+	public void setKey(String k) { this.key = k.toLowerCase(); }
+	public void setMsgIn(String m) 
+	{
+		this.msgIn = m.toLowerCase();
+		if(this.msgIn.length() % 2 != 0)	//odd number of characters
+		{
+			this.msgIn = this.msgIn.concat("x");	//we add a character, we chose X.
+		}
+	}
 	
 	public void decryptMsg()
 	{
@@ -106,15 +117,7 @@ public class Playfair {
 		return null; // value not found in array
 	}
 	
-	public void setKey(String k) { this.key = k.toLowerCase(); }
-	public void setMsgIn(String m) 
-	{
-		this.msgIn = m.toLowerCase();
-		if(this.msgIn.length() % 2 != 0)	//odd number of characters
-		{
-			this.msgIn = this.msgIn.concat("x");	//we add a character, we chose X.
-		}
-	}
+	
 	
 	/**
 	 * 	Supposed to be only for debug purpose, but can be adapted for interactive display
@@ -242,16 +245,16 @@ public class Playfair {
 		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y)
 		{
 			clearA.x = cryptedA.x;
-			clearA.y = (cryptedA.y - 1)%4;
+			clearA.y = Math.abs((cryptedA.y - 1)%4);
 			clearB.x = cryptedB.x;
-			clearB.y = (cryptedB.y - 1)%4;
+			clearB.y = Math.abs((cryptedB.y - 1)%4);
 			return new PairPointReturn(clearA, clearB);
 		}
 		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x)
 		{
-			clearA.x = (cryptedA.x - 1)%4;
+			clearA.x = Math.abs((cryptedA.x - 1)%4);
 			clearA.y = cryptedA.y;
-			clearB.x = (cryptedB.x - 1)%4;
+			clearB.x = Math.abs((cryptedB.x - 1)%4);
 			clearB.y = cryptedB.y;
 			return new PairPointReturn(clearA, clearB);
 		}
