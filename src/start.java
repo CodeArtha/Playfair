@@ -23,22 +23,16 @@ public class start {
 		//New test: key = perfasetnefas; msg = ma cherie je suis dingue de toi
 		//encrypting
 		Playfair p = new Playfair();
-		p.generateKeyGrid("perfasetnefas");
+		p.generateKeyGrid("motdepasse");
 		p.printKeyGrid();
 		p.setMsgIn("macheriejesuisdinguedetoi");
+		System.out.println("Clear message: macheriejesuisdinguedetoi");
 		p.encryptMsg();
-		System.out.println("Encrypted correctly: " + p.getMsgOut()); //output=qrnjrfgfgadsdbgdthwpgpblhy
+		System.out.println("Encrypted correctly: " + p.getMsgOut()); //output=opsjczjdrcpxhbbqlhzmemdthy
 		p.clearMsgOut();
-		//decrypting the output the wrong way:
-		p.setMsgIn("qrnjrfgfgadsdbgdthwpgpblhy");
-		p.encryptMsg();
-		System.out.println("Decrypted wrong way: " + p.getMsgOut()); //output=machfpiejekdishgnguedetoix
-		p.clearMsgOut();
-		//decrypting the output the wrong way:
-		p.setMsgIn("qrnjrfgfgadsdbgdthwpgpblhy");
+		p.setMsgIn("opsjczjdrcpxhbbqlhzmemdthy");
 		p.decryptMsg();
-		System.out.println("Decrypted right way: " + p.getMsgOut()); //output=macheriejespisdgnguedetoix
-		p.clearMsgOut();
+		System.out.println("Décrypted correctly: " + p.getMsgOut()); //output=macheriejesuisdinguedotoix
 		
 		
 		

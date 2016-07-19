@@ -245,16 +245,16 @@ public class Playfair {
 		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y)
 		{
 			clearA.x = cryptedA.x;
-			clearA.y = Math.abs((cryptedA.y - 1)%5);
+			clearA.y = (cryptedA.y + 4)%5;
 			clearB.x = cryptedB.x;
-			clearB.y = Math.abs((cryptedB.y - 1)%5);
+			clearB.y = (cryptedB.y + 4)%5;
 			return new PairPointReturn(clearA, clearB);
 		}
 		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x)
 		{
-			clearA.x = Math.abs((cryptedA.x - 1)%5);
+			clearA.x = (cryptedA.x + 4)%5;
 			clearA.y = cryptedA.y;
-			clearB.x = Math.abs((cryptedB.x - 1)%5);
+			clearB.x = (cryptedB.x + 4)%5;
 			clearB.y = cryptedB.y;
 			return new PairPointReturn(clearA, clearB);
 		}
