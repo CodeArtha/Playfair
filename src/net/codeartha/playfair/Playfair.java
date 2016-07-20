@@ -8,7 +8,7 @@ import net.codeartha.utils.StringHelper;
 /**
  * @author codeartha
  * 
- * note: I chose not to encrypt binoms that contains double letter for easier translation to binary file later on. 
+ * note: I chose not to encrypt bigrams that contains double letter for easier translation to binary file later on. 
  *
  */
 public class Playfair {
@@ -21,61 +21,76 @@ public class Playfair {
 	public Playfair(){}
 	public Playfair(String password)
 	{
-		this.setKey(password);
 		this.generateKeyGrid(password);
 	}
 	
 	public String getMsgOut() {return this.msgOut;}
 	public String getMsgIn(){return this.msgIn;}
-	public void clearMsgIn(){this.msgIn = "";}
-	public void clearMsgOut(){this.msgOut = "";}
 	public void setKey(String k) { this.key = k.toLowerCase(); }
 	public void setMsgIn(String m) 
 	{
-		this.msgIn = m.toLowerCase();
+		this.msgIn = m.toLowerCase().replace('v', 'u');
 		if(this.msgIn.length() % 2 != 0)	//odd number of characters
 		{
 			this.msgIn = this.msgIn.concat("x");	//we add a character, we chose X.
 		}
 	}
+	public void clearMsgIn(){this.msgIn = "";}
+	public void clearMsgOut(){this.msgOut = "";}
+	public void clearKey(){this.key = "";}
+	public void clearGrid(){this.keyGrid = null;}
 	
 	public void decryptMsg()
 	{
+		this.clearMsgOut();  // added to avoid appending to previous msgOut
+		
 		int i = 0;
-		while(i < this.msgIn.length()-1)
+		while(i < this.msgIn.length()-1) // -1 to avoid ArrayOutOfBound because we scan two letters by two
 		{
+			// get the next bigram
 			String char1 = msgIn.substring(i, i + 1);
 			String char2 = msgIn.substring(i + 1, i + 2);
 			
+			// for each char in the bigram we find it's coordinates in the grid
 			Point locationChar1 = getLetterCoords(char1);
 			Point locationChar2 = getLetterCoords(char2);
 			
+			// putting those coordinates trough the Playfair cipher ruleset to get the clear letters coordinates
 			PairPointReturn clearLetters = decryptCoords(locationChar1, locationChar2);
 			
+			// each Point contains the coordinates of the cleartext letters
 			Point firstClear = clearLetters.getFirst();
 			Point secondClear = clearLetters.getSecond();
 			
+			// we find the cleartext letter that matches the cleartext coordinates and append it to the output message
 			this.msgOut = this.msgOut + this.keyGrid[firstClear.y][firstClear.x] + this.keyGrid[secondClear.y][secondClear.x];
-			i = i + 2;
+			i = i + 2; // we go through the text two letters at the time
 		}
 	}
 		
 	public void encryptMsg()
 	{
+		this.clearMsgOut();  // added to avoid appending to previous msgOut
+		
 		int i = 0;
-		while(i < this.msgIn.length()-1)
+		while(i < this.msgIn.length()-1)  // -1 to avoid ArrayOutOfBound because we scan two letters by two
 		{
+			// get the next bigram
 			String char1 = msgIn.substring(i, i + 1);
 			String char2 = msgIn.substring(i + 1, i + 2);
 			
+			// for each char in the bigram we find it's coordinates in the grid
 			Point locationChar1 = getLetterCoords(char1);
 			Point locationChar2 = getLetterCoords(char2);
 			
+			// we put those coordinates trough the Playfair cipher ruleset to get the clear letters coordinates
 			PairPointReturn cryptedLetters = encryptCoords(locationChar1, locationChar2);
 			
+			// each Point contains the coordinates of the cleartext letters
 			Point firstCrypt = cryptedLetters.getFirst();
 			Point secondCrypt = cryptedLetters.getSecond();
 			
+			// we find the cleartext letter that matches the cleartext coordinates and append it to the output message
 			this.msgOut = this.msgOut + this.keyGrid[firstCrypt.y][firstCrypt.x] + this.keyGrid[secondCrypt.y][secondCrypt.x];
 			i = i + 2;
 		}
@@ -87,7 +102,7 @@ public class Playfair {
 	 * @param letter
 	 * @return Point
 	 */
-	public Point getLetterCoords( String letter)//Object[][] array,
+	private Point getLetterCoords( String letter)//Object[][] array,
 	{
 		letter = letter.toLowerCase();		// just in case...
 		
@@ -120,7 +135,7 @@ public class Playfair {
 	
 	
 	/**
-	 * 	Supposed to be only for debug purpose, but can be adapted for interactive display
+	 * 	Supposed to be only for debug purpose, but could be adapted for interactive display
 	 * 	Prints the keyGrid directly to console output.
 	 */
 	public void printKeyGrid()
@@ -153,7 +168,7 @@ public class Playfair {
 			}
 		}
 		
-		
+		this.clearKey(); // good time to erase the key, not needed later anyway
 	}
 	
 	/**
@@ -175,7 +190,7 @@ public class Playfair {
 			}
 		}
 		
-		
+		this.clearKey(); // good time to erase the key, not needed later anyway
 	}
 	
 	/**
@@ -194,11 +209,11 @@ public class Playfair {
 		Point cryptA = new Point(0, 0);
 		Point cryptB = new Point(0, 0);
 
-		if (clearA.x == clearB.x && clearA.y == clearB.y)
+		if (clearA.x == clearB.x && clearA.y == clearB.y)		// two letters are the same => do nothing
 		{
 			return new PairPointReturn(clearA, clearB);
 		}
-		else if (clearA.x == clearB.x && clearA.y != clearB.y)
+		else if (clearA.x == clearB.x && clearA.y != clearB.y)	// two letters on the same column
 		{
 			cryptA.x = clearA.x;
 			cryptA.y = (clearA.y + 1)%5;
@@ -206,7 +221,7 @@ public class Playfair {
 			cryptB.y = (clearB.y + 1)%5;
 			return new PairPointReturn(cryptA, cryptB);
 		}
-		else if (clearA.y == clearB.y && clearA.x != clearB.x)
+		else if (clearA.y == clearB.y && clearA.x != clearB.x)	// letters on the same row
 		{
 			cryptA.x = (clearA.x + 1)%5;
 			cryptA.y = clearA.y;
@@ -214,7 +229,7 @@ public class Playfair {
 			cryptB.y = clearB.y;
 			return new PairPointReturn(cryptA, cryptB);
 		}
-		else
+		else													// letters form a rectangle
 		{
 			cryptA.x = clearB.x;
 			cryptA.y = clearA.y;
@@ -238,19 +253,19 @@ public class Playfair {
 		Point clearA = new Point(0, 0);
 		Point clearB = new Point(0, 0);
 
-		if (cryptedA.x == cryptedB.x && cryptedA.y == cryptedB.y)
+		if (cryptedA.x == cryptedB.x && cryptedA.y == cryptedB.y) 		// the two letters are the same => do nothing
 		{
 			return new PairPointReturn(cryptedA, cryptedB);
 		}
-		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y)
+		else if (cryptedA.x == cryptedB.x && cryptedA.y != cryptedB.y) 	// two letters on the same column
 		{
 			clearA.x = cryptedA.x;
-			clearA.y = (cryptedA.y + 4)%5;
+			clearA.y = (cryptedA.y + 4)%5; // +4 mod(5) to solve the issue with removing 1 that sometimes gives negative numbers instead of looping around
 			clearB.x = cryptedB.x;
 			clearB.y = (cryptedB.y + 4)%5;
 			return new PairPointReturn(clearA, clearB);
 		}
-		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x)
+		else if (cryptedA.y == cryptedB.y && cryptedA.x != cryptedB.x) 	// two letters on the same row
 		{
 			clearA.x = (cryptedA.x + 4)%5;
 			clearA.y = cryptedA.y;
@@ -258,7 +273,7 @@ public class Playfair {
 			clearB.y = cryptedB.y;
 			return new PairPointReturn(clearA, clearB);
 		}
-		else
+		else															// two letters form a rectangle
 		{
 			clearA.x = cryptedB.x;
 			clearA.y = cryptedA.y;
