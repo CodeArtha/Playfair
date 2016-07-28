@@ -12,7 +12,6 @@ import net.codeartha.utils.StringHelper;
  *
  */
 public class Playfair {
-
 	private String[][] keyGrid = new String [5][5];  // String[3][5] create array of 3 rows 5 columns => keyGrid[y][x]
 	private String key = "";
 	private String msgIn = "";
