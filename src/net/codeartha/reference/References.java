@@ -13,12 +13,12 @@ public class References {
             "--encrypt or -e \n" +
             "--decrypt or -d \n" +
             "--help (ignores further arguments) \n" +
-            "--version \n" +
+            "--version (ignores further arguments) \n" +
             "\n" +
             "Key: \n" +
             "--key/-k sets the key \n" +
             "\n" +
             "Modifier: \n" +
-            "--freetype (user may type multiline and end with \\eof) \n" ;
+            "--freetype (WIP) \n" ;
 
 }

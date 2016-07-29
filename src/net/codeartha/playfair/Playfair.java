@@ -25,7 +25,7 @@ public class Playfair {
 	
 	public String getMsgOut() {return this.msgOut;}
 	public String getMsgIn(){return this.msgIn;}
-	public void setKey(String k) { this.key = k.toLowerCase(); }
+	public void setKey(String k) { this.key = StringHelper.removeSpaces(StringHelper.stripAccents(k)).toLowerCase().replace('v', 'u') ;}
 	public void setMsgIn(String m) 
 	{
 		this.msgIn = m.toLowerCase().replace('v', 'u');
@@ -38,6 +38,12 @@ public class Playfair {
 	public void clearMsgOut(){this.msgOut = "";}
 	public void clearKey(){this.key = "";}
 	public void clearGrid(){this.keyGrid = null;}
+	public void clearAll(){
+		clearMsgIn();
+		clearMsgOut();
+		clearKey();
+		clearGrid();
+	}
 	
 	public void decryptMsg()
 	{
