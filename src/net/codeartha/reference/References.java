@@ -1,7 +1,7 @@
 package net.codeartha.reference;
 
 public class References {
-    public static final String VERSION = "1.7.10-1.0";
+    public static final String VERSION = "1.0.0";
     
     public static final String HELP = 
     		"Syntax: \n" + 
