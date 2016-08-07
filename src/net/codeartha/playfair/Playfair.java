@@ -25,9 +25,14 @@ public class Playfair {
 	
 	public String getMsgOut() {return this.msgOut;}
 	public String getMsgIn(){return this.msgIn;}
-	public void setKey(String k) { this.key = StringHelper.removeSpaces(StringHelper.stripAccents(k)).toLowerCase().replace('v', 'u') ;}
-	public void setMsgIn(String m) 
-	{
+	public void setKey(String k) { 
+		k = StringHelper.stripAccents(k);
+		k = StringHelper.removeSpaces(k);
+		this.key = k.toLowerCase().replace('v', 'u') ;
+		}
+	public void setMsgIn(String m) {
+		m = StringHelper.removeSpaces(m);
+		m = StringHelper.stripAccents(m);
 		this.msgIn = m.toLowerCase().replace('v', 'u');
 		if(this.msgIn.length() % 2 != 0)	//odd number of characters
 		{
