@@ -25,26 +25,6 @@ public class StringHelper{
 	}
 	
 	/**
-	 * This method removes any spaces in a string
-	 * 
-	 * @param String
-	 * @return String
-	 */
-	public static String removeSpaces(String s)
-	{
-		StringBuilder noSpace = new StringBuilder();
-		for (int i = 0; i < s.length(); i++)
-		{
-			String si = Character.toString(s.charAt(i));
-			if(si != " ")
-			{
-				noSpace.append(si);
-			}
-		}
-		return noSpace.toString();
-	}
-	
-	/**
 	 * This method replaces accents by their non-accented character (French support only)
 	 * 
 	 * @param String
