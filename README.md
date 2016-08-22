@@ -13,7 +13,13 @@ I hope a later integration in AlmaPix which is a multi-encryption protocol app m
 
 * Current Version:
 
-almost ready for first release, everything works, so you can clone repo. I want to add an interactive console interface before releasing.
+1.0.2
+
+* Older Releases:
+
+1.0.1
+1.0.0
+1.0.0-beta
 
 ### How do I get set up? ###
 
