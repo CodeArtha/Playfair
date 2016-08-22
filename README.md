@@ -11,21 +11,22 @@ Files will be treated as gziped then converted to HEX and then encrypted using a
 
 I hope a later integration in AlmaPix which is a multi-encryption protocol app made for cascading encryption and/or stenography.
 
-* Current Version:
+* Current Version (.jar):
 
-1.0.2
+[1.0.2] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.2.jar)
 
-* Older Releases:
+* Older Releases (.jar):
 
-1.0.1
-1.0.0
-1.0.0-beta
+[1.0.1] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.1.jar)
+[1.0.0] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.0.jar)
+[1.0.0-beta] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.0-beta.jar)
 
-### How do I get set up? ###
+### How do I get started? ###
 
 * Summary of set up
 
 For now you need to clone the repo or download it's zip then compile it on your computer in order to get a runnable binary.
+(EDIT) No need to compile anymore, you can download each release as a JAR. Then use command line to run it: java -jar path/to/downloaded.jar --help
 
 * How to run tests
 
