@@ -1,3 +1,4 @@
+package net.codeartha.playfair;
 import net.codeartha.playfair.Playfair;
 import net.codeartha.reference.References;
 
