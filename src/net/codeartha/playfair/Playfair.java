@@ -3,7 +3,7 @@ package net.codeartha.playfair;
 import java.awt.Point;
 
 import net.codeartha.playfair.PairPointReturn;
-import net.codeartha.utils.StringHelper;
+import net.codeartha.playfair.utils.StringHelper;
 
 /**
  * @author codeartha
