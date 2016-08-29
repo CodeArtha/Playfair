@@ -18,7 +18,9 @@ I hope a later integration in AlmaPix which is a multi-encryption protocol app m
 * Older Releases (.jar):
 
 [1.0.1] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.1.jar)
+
 [1.0.0] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.0.jar)
+
 [1.0.0-beta] (https://github.com/CodeArtha/Playfair/raw/master/releases/Playfair_1.0.0-beta.jar)
 
 ### How do I get started? ###
